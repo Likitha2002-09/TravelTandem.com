@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TravelTandem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom Styles */
+    .hero-overlay {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+    }
+    .modal {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    .backdrop-blur-sm {
+      backdrop-filter: blur(5px);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- Hero Section -->
+  <div class="relative h-screen bg-cover bg-center" style="background-image: url('header.jpg');">
+    <div class="absolute inset-0 hero-overlay flex flex-col justify-center items-center text-white px-4 text-center">
+      <h1 class="text-5xl font-extrabold mb-4 tracking-wider text-yellow-300 drop-shadow-md">Travel Tandem</h1>
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">✨ Find & Connect with Like-Minded Travelers</h2>
+      <div>
+        <button onclick="openModal('signupModal')" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg mr-4">Sign Up</button>
+        <button onclick="openModal('loginModal')" class="bg-blue-900 hover:bg-blue-950 text-white px-6 py-2 rounded-lg">Log In</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+      <button onclick="closeModal('signupModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h3 class="text-xl font-semibold mb-4 text-center">Sign Up</h3>
+      <label for="signupEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" id="signupEmail" placeholder="Enter your email" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <label for="signupPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <div class="relative">
+        <input type="password" id="signupPassword" placeholder="Enter your password" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+        <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-800">
+          👁️
+        </button>
+      </div>
+      <button onclick="signup()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded w-full transition duration-200">Register</button>
+      <button onclick="closeModal('signupModal')" class="mt-3 text-sm text-gray-500 hover:underline">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Log In Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+      <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h3 class="text-xl font-semibold mb-4 text-center">Log In</h3>
+      <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <div class="relative">
+        <input type="password" id="loginPassword" placeholder="Enter your password" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+        <button type="button" onclick="togglePasswordVisibility('loginPassword')" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-800">
+          👁️
+        </button>
+      </div>
+      <button onclick="login()" class="bg-blue-900 hover:bg-blue-950 text-white px-4 py-2 rounded w-full transition duration-200">Log In</button>
+      <button onclick="closeModal('loginModal')" class="mt-3 text-sm text-gray-500 hover:underline">Cancel</button>
+    </div>
+  </div>
+  <!-- JavaScript Logic -->
+  <script>
+    // Open Modal
+    const openModal = (id) => document.getElementById(id).classList.remove('hidden');
+
+    // Close Modal
+    const closeModal = (id) => document.getElementById(id).classList.add('hidden');
+
+    // Toggle Password Visibility
+    const togglePasswordVisibility = (inputId) => {
+      const input = document.getElementById(inputId);
+      input.type = input.type === "password" ? "text" : "password";
+    };
+
+    // Sign Up Function
+    const signup = () => {
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+
+      alert("Registration successful!");
+      closeModal('signupModal');
+    };
+
+    // Log In Function
+    const login = () => {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      alert("Login successful!");
+      closeModal('loginModal');
+    };
+  </script>
+
+  <!-- Explore by Month -->
+  <section class="px-6 py-12">
+    <h2 class="text-2xl font-bold mb-6 text-center">Explore by Month</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="text-center cursor-pointer" onclick="showMonthDetails('January')">
+        <img src="Shimla.jpg" class="rounded-xl w-full h-40 object-cover">
+        <p class="mt-2 font-medium">❄️ January</p>
+      </div>
+      <div class="text-center cursor-pointer" onclick="showMonthDetails('May')">
+        <img src="Munnar.jpg" class="rounded-xl w-full h-40 object-cover">
+        <p class="mt-2 font-medium">🌿 May</p>
+      </div>
+      <div class="text-center cursor-pointer" onclick="showMonthDetails('September')">
+        <img src="kodagu.jpg" class="rounded-xl w-full h-40 object-cover">
+        <p class="mt-2 font-medium">🌧️ September</p>
+      </div>
+      <div class="text-center cursor-pointer" onclick="showMonthDetails('December')">
+        <img src="Goa.jpg" class="rounded-xl w-full h-40 object-cover">
+        <p class="mt-2 font-medium">🎄 December</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Month Details Modal -->
+  <div id="monthModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-xl w-11/12 md:w-2/3 lg:w-1/2 shadow-lg relative">
+      <button onclick="hideMonthDetails()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h2 class="text-2xl font-bold mb-4 text-center" id="modalTitle"></h2>
+      <p id="modalDescription" class="mb-4"></p>
+      <ul class="list-disc pl-6">
+        <li id="modalDestination" class="mb-2"></li>
+        <li id="modalDuration" class="mb-2"></li>
+        <li id="modalCost" class="mb-2"></li>
+        <li id="modalPlaces" class="mb-2"></li>
+      </ul>
+      <div id="modalPics" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Images will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+      <button onclick="closeModal('signupModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h3 class="text-xl font-semibold mb-4 text-center">Sign Up</h3>
+      <label for="signupEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" id="signupEmail" placeholder="Enter your email" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <label for="signupPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <div class="relative">
+        <input type="password" id="signupPassword" placeholder="Enter your password" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+        <button type="button" onclick="togglePasswordVisibility('signupPassword')" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-800">
+          👁️
+        </button>
+      </div>
+      <button onclick="signup()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded w-full transition duration-200">Register</button>
+      <button onclick="closeModal('signupModal')" class="mt-3 text-sm text-gray-500 hover:underline">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Log In Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+      <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+      <h3 class="text-xl font-semibold mb-4 text-center">Log In</h3>
+      <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+      <input type="email" id="loginEmail" placeholder="Enter your email" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+      <div class="relative">
+        <input type="password" id="loginPassword" placeholder="Enter your password" class="w-full mb-3 p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+        <button type="button" onclick="togglePasswordVisibility('loginPassword')" class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-800">
+          👁️
+        </button>
+      </div>
+      <button onclick="login()" class="bg-blue-900 hover:bg-blue-950 text-white px-4 py-2 rounded w-full transition duration-200">Log In</button>
+      <button onclick="closeModal('loginModal')" class="mt-3 text-sm text-gray-500 hover:underline">Cancel</button>
+    </div>
+  </div>
+
+  
+</body>
+<script>
+ // Data for each month
+ const travelData = {
+      January: {
+        description: "❄️ Explore the snowy landscapes of Shimla and enjoy winter sports.",
+        destination: "Shimla, Himachal Pradesh",
+        duration: "🕒 5 days",
+        cost: "💰 ₹15,000 per person",
+        places: "📍 Kufri, Mall Road, Jakhoo Temple, Christ Church",
+        images: ["shimla1.jpg", "shimla2.jpg", "shimla3.webp"]
+      },
+      May: {
+        description: "🌿 Experience the lush greenery and tea plantations of Munnar.",
+        destination: "Munnar, Kerala",
+        duration: "🕒 4 days",
+        cost: "💰 ₹12,000 per person",
+        places: "📍 Eravikulam National Park, Mattupetty Dam, Tea Museum, Anamudi Peak",
+        images: ["munnar1.jpg", "munnar2.jpg", "munnar3.jpg"]
+      },
+      September: {
+        description: "🌧️ Visit the serene hills of Kodagu and enjoy the monsoon vibes.",
+        destination: "Kodagu, Karnataka",
+        duration: "🕒 3 days",
+        cost: "💰 ₹10,000 per person",
+        places: "📍 Abbey Falls, Raja's Seat, Dubare Elephant Camp, Talakaveri",
+        images: ["kodagu1.jpg", "kodagu2.jpg", "kodagu3.jpg"]
+      },
+      December: {
+        description: "🎄 Relax on the sunny beaches of Goa and enjoy the festive season.",
+        destination: "Goa, India",
+        duration: "🕒 6 days",
+        cost: "💰 ₹20,000 per person",
+        places: "📍 Baga Beach, Calangute Beach, Fort Aguada, Basilica of Bom Jesus",
+        images: ["goa1.jpg", "goa2.jpg", "goa3.webp"]
+      }
+    };
+ 
+    // Function to show details for a specific month in a modal
+function showMonthDetails(month) {
+  const details = travelData[month];
+  if (details) {
+    // Populate the modal with travel details
+    document.getElementById("modalTitle").innerHTML = `<span class="text-yellow-500">${month}</span> Travel Details`;
+    document.getElementById("modalDescription").innerHTML = `<span class="text-blue-600">${details.description}</span>`;
+    document.getElementById("modalDestination").innerHTML = `<strong class="text-green-600">Destination:</strong> ${details.destination}`;
+    document.getElementById("modalDuration").innerHTML = `<strong class="text-purple-600">Duration:</strong> ${details.duration}`;
+    document.getElementById("modalCost").innerHTML = `<strong class="text-red-500">Cost:</strong> ${details.cost}`;
+    document.getElementById("modalPlaces").innerHTML = `<strong class="text-indigo-500">Places to Visit:</strong> ${details.places}`;
+ 
+    // Add location pictures
+    const modalPics = document.getElementById("modalPics");
+    modalPics.innerHTML = ""; // Clear previous images
+    details.images.forEach((image) => {
+      const imgElement = document.createElement("img");
+      imgElement.src = image;
+      imgElement.alt = `${month} Location`;
+      imgElement.className = "rounded-xl w-full h-40 object-cover shadow-lg";
+      modalPics.appendChild(imgElement);
+    });
+ 
+    // Show the modal
+    document.getElementById("monthModal").classList.remove("hidden");
+  }
+}
+ // Function to hide the modal
+ function hideMonthDetails() {
+      document.getElementById("monthModal").classList.add("hidden");
+    }
+</script>
+
+<!-- Packing Checklist Section -->
+<section class="bg-gray-100 px-6 py-12">
+  <h2 class="text-2xl font-bold mb-6 text-center">All-in-One Travel Guidance</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Packing Checklist -->
+    <div class="bg-white p-6 rounded-xl shadow-md cursor-pointer" onclick="showPackingTips()">
+      <h3 class="text-xl font-semibold mb-2">📦 Packing Checklist</h3>
+      <p>Get a personalized packing list based on your destination’s weather, trip duration, and cultural norms.</p>
+    </div>
+    <!-- Currency Tips -->
+    <div class="bg-white p-6 rounded-xl shadow-md cursor-pointer" onclick="showCurrencyTips()">
+      <h3 class="text-xl font-semibold mb-2">💱 Currency Tips</h3>
+      <p>Learn how to manage local currencies, avoid scams, and get the best exchange rates while traveling.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Packing Tips Modal -->
+<div id="packingTipsModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+    <!-- Close Button -->
+    <button onclick="closePackingTips()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+    <h3 class="text-xl font-semibold mb-4 text-center">Packing Tips</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+      <li>🧳 Pack light and prioritize essentials.</li>
+      <li>🌦️ Check the weather forecast and pack accordingly.</li>
+      <li>🩹 Include a basic first-aid kit.</li>
+      <li>🔌 Carry universal adapters and power banks.</li>
+      <li>📄 Keep copies of important documents (passport, tickets).</li>
+      <li>👕 Roll clothes to save space and avoid wrinkles.</li>
+      <li>💧 Carry a reusable water bottle.</li>
+      <li>🧼 Pack travel-size toiletries to save space.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Currency Tips Modal -->
+<div id="currencyTipsModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+    <!-- Close Button -->
+    <button onclick="closeCurrencyTips()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+    <h3 class="text-xl font-semibold mb-4 text-center">Currency Tips</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+      <li>💱 Always carry some local currency for small purchases.</li>
+      <li>🏦 Use ATMs to withdraw cash in the local currency for better exchange rates.</li>
+      <li>💳 Prefer credit cards with no foreign transaction fees.</li>
+      <li>🛡️ Avoid exchanging money at airports due to high fees.</li>
+      <li>📊 Check the current exchange rate before traveling.</li>
+      <li>🔒 Keep your money and cards in a secure travel wallet.</li>
+      <li>📱 Use currency converter apps for quick calculations.</li>
+      <li>🧾 Keep receipts for currency exchanges for reference.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript Logic for Modals -->
+<script>
+  // Show Packing Tips Modal
+  const showPackingTips = () => {
+    document.getElementById('packingTipsModal').classList.remove('hidden');
+  };
+
+  // Close Packing Tips Modal
+  const closePackingTips = () => {
+    document.getElementById('packingTipsModal').classList.add('hidden');
+  };
+
+  // Show Currency Tips Modal
+  const showCurrencyTips = () => {
+    document.getElementById('currencyTipsModal').classList.remove('hidden');
+  };
+
+  // Close Currency Tips Modal
+  const closeCurrencyTips = () => {
+    document.getElementById('currencyTipsModal').classList.add('hidden');
+  };
+</script>
+
+  <!-- Why TravelTandem -->
+<section class="bg-white px-6 py-12">
+  <h2 class="text-2xl font-bold mb-6 text-center">Why TravelTandem?</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+   
+    <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">🧠 Smart Travel Mate Matching</h3>
+      <p>AI-powered compatibility engine helps you find like-minded travel companions based on preferences, budget, personality, and destinations.</p>
+    </div>
+ 
+    <div class="bg-blue-50 border border-blue-200 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">📦 Intelligent Packing Assistant</h3>
+      <p>Instant checklist tailored to your destination, weather, cultural norms, and personal travel style — downloadable as PDF.</p>
+    </div>
+ 
+    <div class="bg-green-50 border border-green-200 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">💡 Cultural & Safety Insights</h3>
+      <p>Get region-specific etiquette tips, safety alerts, emergency contacts, and advice to avoid common tourist traps or scams.</p>
+    </div>
+ 
+    <div class="bg-purple-50 border border-purple-200 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">📓 Personal Travel Journal</h3>
+      <p>Save your trips, write travel notes, and upload photos to remember your journey or share tips with the community.</p>
+    </div>
+ 
+    <div class="bg-pink-50 border border-pink-200 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">💱 Currency Estimator</h3>
+      <p>Live currency rates + budget planner help you manage expenses smartly and confidently, even offline!</p>
+    </div>
+ 
+    <div class="bg-gray-100 border border-gray-300 p-6 rounded-xl shadow-md">
+      <h3 class="text-xl font-semibold mb-2">🛡️ Offline Survival Kit</h3>
+      <p>Access essential data like packing, emergency numbers, and weather — even with no internet connection.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Travel Buddy Matching -->
+<section class="bg-indigo-50 px-6 py-12">
+  <h2 class="text-2xl font-bold mb-6 text-center">Connect with Travel Buddies</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+      <img src="https://randomuser.me/api/portraits/women/75.jpg" class="w-24 h-24 rounded-full mb-4">
+      <h3 class="text-lg font-bold">Ananya, 28</h3>
+      <p class="text-sm text-gray-600 mb-2">Loves mountains, photography & road trips</p>
+      <span class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full mb-3">85% Match</span>
+      <button onclick="openChat('Ananya')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Connect</button>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-md flex flex-col items-center text-center">
+      <img src="https://randomuser.me/api/portraits/men/44.jpg" class="w-24 h-24 rounded-full mb-4">
+      <h3 class="text-lg font-bold">Karan, 32</h3>
+      <p class="text-sm text-gray-600 mb-2">Adventurer, foodie, Europe explorer</p>
+      <span class="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full mb-3">78% Match</span>
+      <button onclick="openChat('Karan')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Connect</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Chat Prompt Modal -->
+<div id="chatModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
+  <div class="bg-white p-6 rounded-xl w-80 shadow-lg relative">
+    <!-- Close Icon and Video Call Icon -->
+    <div class="absolute top-4 right-4 flex items-center space-x-4">
+      <!-- Video Call Icon -->
+      <button onclick="startVideoCall()" class="text-gray-500 hover:text-gray-800 text-xl">
+        📹
+      </button>
+      <!-- Close Icon -->
+      <button onclick="closeModal('chatModal')" class="text-gray-500 hover:text-gray-800 text-xl">&times;</button>
+    </div>
+    <h3 class="text-xl font-semibold mb-4 text-center" id="chatTitle"></h3>
+    <div class="bg-gray-100 p-4 rounded-lg h-40 overflow-y-auto mb-4" id="chatMessages">
+      <!-- Chat messages will be dynamically added here -->
+    </div>
+    <div class="flex items-center">
+      <input type="text" id="chatInput" placeholder="Type a message..." class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      <button onclick="sendMessage()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded ml-2">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript Logic for Chat -->
+<script>
+  // Open Chat Modal
+const openChat = (buddyName) => {
+  document.getElementById('chatTitle').textContent = `Chat with ${buddyName}`;
+  document.getElementById('chatMessages').innerHTML = ''; // Clear previous messages
+  document.getElementById('chatModal').classList.remove('hidden');
+};
+
+// Close Chat Modal (Renamed to avoid conflict)
+const closeChatModal = () => {
+  document.getElementById('chatModal').classList.add('hidden');
+};
+
+// Send Message
+const sendMessage = () => {
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+
+  if (chatInput.value.trim() === '') {
+    alert('Please type a message.');
+    return;
+  }
+
+  // Add user message to chat
+  const userMessage = document.createElement('div');
+  userMessage.className = 'text-right mb-2';
+  userMessage.innerHTML = `<span class="bg-blue-500 text-white px-3 py-1 rounded-lg inline-block">${chatInput.value}</span>`;
+  chatMessages.appendChild(userMessage);
+
+  // Simulate buddy's response
+  setTimeout(() => {
+    const buddyMessage = document.createElement('div');
+    buddyMessage.className = 'text-left mb-2';
+    buddyMessage.innerHTML = `<span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-lg inline-block">That's great! Let's plan something soon.</span>`;
+    chatMessages.appendChild(buddyMessage);
+
+    // Scroll to the bottom of the chat
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1000);
+
+  // Clear input field
+  chatInput.value = '';
+};
+  // Start Video Call
+  const startVideoCall = () => {
+    alert("Starting video call...");
+    // Add your video call logic here
+  };
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white px-6 py-10 mt-12">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <!-- Contact Information -->
+    <div>
+      <h2 class="text-2xl font-bold mb-2 text-yellow-300">TravelTandem</h2>
+      <p class="text-sm italic">"Not all those who wander are lost — they might just be on TravelTandem."</p>
+      <p class="mt-4">Email: <a href="mailto:support@traveltandem.com" class="text-blue-400 hover:underline">support@traveltandem.com</a></p>
+      <p>Phone: +91 98765 43210</p>
+      <p>Address: Hyderabad, India</p>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Quick Links</h3>
+      <ul class="space-y-1">
+        <li><a href="#home" class="hover:text-yellow-400">Home</a></li>
+        <li><a href="#about" class="hover:text-yellow-400">About Us</a></li>
+        <li><a href="#contact" class="hover:text-yellow-400">Contact Us</a></li>
+        <li><a href="#faq" class="hover:text-yellow-400">FAQs</a></li>
+      </ul>
+    </div>
+
+    <!-- Newsletter Subscription -->
+    <div>
+      <h3 class="text-lg font-semibold mb-2">Subscribe to Our Newsletter</h3>
+      <form class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2">
+        <input type="email" placeholder="Enter your email" class="p-2 border rounded w-full md:w-auto focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Social Media Links -->
+  <div class="mt-8 text-center">
+    <h3 class="text-lg font-semibold mb-2">Follow Us</h3>
+    <div class="flex justify-center space-x-4">
+      <a href="#" class="hover:text-yellow-400" title="Instagram">📸</a>
+      <a href="#" class="hover:text-yellow-400" title="Facebook">📘</a>
+      <a href="#" class="hover:text-yellow-400" title="Twitter">🐦</a>
+    </div>
+  </div>
+
+  <!-- Copyright Notice -->
+  <div class="text-center text-sm text-gray-500 mt-6">
+    © 2023 TravelTandem. All rights reserved.
+  </div>
+</footer>
+</body>
+</html>
