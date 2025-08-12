@@ -1,5 +1,5 @@
 # TravelTandem 🌍
-Plan Smarter, Travel Better,Connect Globally
+Plan Smarter, Travel Better, Connect Globally
 
 TravelTandem is a modern, interactive web application designed to help travelers connect with like-minded individuals, explore destinations by month, and access essential travel tips. The application provides a seamless user experience with features like travel buddy matching, packing and currency tips, and real-time chat functionality.
 
